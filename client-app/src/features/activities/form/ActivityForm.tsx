@@ -1,10 +1,10 @@
-import React, { useState, FormEvent, useContext, useEffect } from "react";
-import { Segment, Form, Button, Grid } from "semantic-ui-react";
-import { IActivity } from "../../../app/models/activity";
-import { v4 as uuid } from "uuid";
 import { observer } from "mobx-react-lite";
+import React, { FormEvent, useContext, useEffect, useState } from "react";
+import { RouteComponentProps } from "react-router-dom";
+import { Button, Form, Grid, Segment } from "semantic-ui-react";
+import { v4 as uuid } from "uuid";
+import { IActivity } from "../../../app/models/activity";
 import ActivityStore from "../../../app/stores/activityStore";
-import { RouteComponentProps, Link } from "react-router-dom";
 
 interface IDetailParams {
   id: string;
