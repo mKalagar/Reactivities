@@ -1,9 +1,11 @@
-using System;
-using System.Threading;
-using System.Threading.Tasks;
+using Application.Errors;
 using FluentValidation;
 using MediatR;
 using Persistence;
+using System;
+using System.Net;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Application.Activities
 {
@@ -19,7 +21,7 @@ namespace Application.Activities
             public string City { get; set; }
             public string Venue { get; set; }
         }
-        
+
         public class CommandValidator : AbstractValidator<Create.Command>
         {
             public CommandValidator()
@@ -45,9 +47,10 @@ namespace Application.Activities
             public async Task<Unit> Handle(Command request, CancellationToken cancellationToken)
             {
                 var activity = await _context.Activities.FindAsync(request.Id);
+
                 if (activity == null)
                 {
-                    throw new Exception("Could not find activity");
+                    throw new RestException(HttpStatusCode.NotFound, new { activity = "Could not find activity" });
                 }
 
                 activity.Title = request.Title ?? activity.Title;
